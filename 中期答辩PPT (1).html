@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>中期答辩 · GeoAirFormer 京津冀PM2.5预测</title>
+<style>
+  :root{
+    --navy:#1F3A5F; --blue:#2E6DA4; --ink:#2B3340; --body:#4A5462; --muted:#8A93A1;
+    --tint:#EEF4FA; --line:#E3E9F0; --orange:#C75B12; --green:#2E7D46; --red:#B03A2E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{background:#101A2B;font-family:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",-apple-system,sans-serif;color:var(--ink);}
+
+  .topbar{position:fixed;top:0;left:0;right:0;height:50px;background:rgba(16,26,43,.96);z-index:100;
+    display:flex;align-items:center;padding:0 24px;color:#9FB2C8;font-size:13px;}
+  .topbar .tt{font-weight:600;color:#fff;font-size:14px;letter-spacing:.4px;}
+  .topbar .nav{margin-left:auto;display:flex;align-items:center;gap:12px;}
+  .topbar .nav button{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);color:#fff;
+    width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;transition:.15s;}
+  .topbar .nav button:hover{background:var(--blue);}
+  .topbar .nav .pg{font-weight:600;color:#fff;min-width:54px;text-align:center;}
+
+  .deck{height:100vh;overflow-y:auto;scroll-snap-type:y mandatory;padding-top:62px;padding-bottom:28px;}
+
+  .slide{width:min(95vw,1220px);aspect-ratio:16/9;background:#fff;border-radius:10px;overflow:hidden;
+    margin:18px auto;scroll-snap-align:center;box-shadow:0 14px 40px rgba(0,0,0,.4);
+    display:flex;flex-direction:column;}
+
+  /* 页眉 */
+  .slide-head{flex:0 0 auto;display:flex;align-items:center;background:var(--navy);color:#fff;
+    padding:0 26px;height:56px;}
+  .slide-head .t{font-size:21px;font-weight:600;letter-spacing:.3px;}
+  .slide-head .tag{margin-left:auto;font-size:12px;color:#9FB2C8;font-weight:500;}
+
+  .slide-body{flex:1 1 auto;padding:24px 34px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+  .slide-foot{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+    padding:0 26px;height:28px;background:#F7F9FB;border-top:1px solid var(--line);font-size:10.5px;color:var(--muted);}
+
+  /* 文本层级 */
+  .sec{color:var(--navy);font-size:15px;font-weight:600;margin-bottom:10px;}
+  .lead{color:var(--body);font-size:13.5px;line-height:1.75;}
+
+  .cols{display:flex;gap:26px;flex:1;min-height:0;}
+  .col{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;}
+
+  /* 列表 */
+  ul.pts{list-style:none;display:flex;flex-direction:column;gap:9px;}
+  ul.pts li{font-size:13px;line-height:1.6;color:var(--body);padding-left:16px;position:relative;}
+  ul.pts li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--blue);}
+  ul.pts li b{color:var(--navy);font-weight:600;}
+  ul.pts li.key::before{background:var(--orange);}
+  ul.pts li.key b{color:var(--orange);}
+  ul.pts li.sub{padding-left:28px;color:var(--muted);font-size:12px;}
+  ul.pts li.sub::before{content:"—";background:none;color:#C4CCD6;top:0;width:auto;height:auto;font-size:11px;}
+
+  /* 卡片 */
+  .card{background:var(--tint);border-radius:8px;padding:13px 16px;}
+  .card .ct{font-weight:600;color:var(--navy);font-size:13.5px;margin-bottom:5px;}
+  .card p{font-size:12.5px;line-height:1.6;color:var(--body);}
+  .card p b{color:var(--navy);font-weight:600;}
+  .card p em{font-style:normal;color:var(--orange);font-weight:600;}
+  .card.soft{background:#fff;border:1px solid var(--line);}
+
+  /* 图 */
+  .fig{background:#fff;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;flex:1;min-height:0;}
+  .fig img{width:100%;height:100%;object-fit:contain;background:#fff;display:block;}
+  .fig .cap{font-size:10.5px;color:var(--muted);padding:6px 12px;text-align:center;background:#F7F9FB;border-top:1px solid var(--line);flex:0 0 auto;}
+
+  /* KPI */
+  .kpis{display:flex;gap:14px;margin-top:6px;}
+  .kpi{flex:1;background:var(--tint);border-radius:8px;padding:14px 10px;text-align:center;}
+  .kpi .v{font-size:28px;font-weight:700;color:var(--navy);line-height:1;}
+  .kpi .v em{font-style:normal;font-size:15px;color:var(--muted);font-weight:500;margin-left:1px;}
+  .kpi .l{font-size:11px;color:var(--body);margin-top:7px;}
+  .kpi .s{font-size:10.5px;color:var(--green);margin-top:3px;}
+  .kpi.hl .v{color:var(--orange);}
+
+  /* 流程 */
+  .flow{display:flex;align-items:stretch;gap:8px;margin-top:8px;}
+  .flow .step{flex:1;background:var(--navy);color:#fff;border-radius:8px;padding:12px 8px;text-align:center;}
+  .flow .step.alt{background:var(--blue);}
+  .flow .step .st{font-weight:600;font-size:13px;}
+  .flow .step .sd{font-size:10.5px;color:#CBD7E4;margin-top:5px;line-height:1.5;}
+  .flow .arrow{align-self:center;color:var(--orange);font-size:17px;font-weight:600;}
+
+  /* 表格 */
+  table.g{width:100%;border-collapse:collapse;font-size:12.5px;}
+  table.g th{background:var(--navy);color:#fff;padding:9px 12px;text-align:left;font-weight:500;font-size:12px;}
+  table.g td{padding:9px 12px;border-bottom:1px solid var(--line);color:var(--body);}
+  table.g tr:nth-child(even) td{background:#F7F9FB;}
+  .tagp{font-size:10.5px;font-weight:500;padding:2px 9px;border-radius:9px;white-space:nowrap;}
+  .tagp.p0{background:#FBE9E7;color:var(--red);}
+  .tagp.p1{background:#FDF0E4;color:var(--orange);}
+  .tagp.p2{background:var(--tint);color:var(--blue);}
+
+  /* 封面 */
+  .cover{background:linear-gradient(135deg,#14233F 0%,#1F3A5F 60%,#16283C 100%);color:#fff;}
+  .cover .inner{flex:1;display:flex;padding:0 54px;}
+  .cover .main{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .cover .kicker{font-size:14px;color:#9FB2C8;letter-spacing:3px;margin-bottom:18px;}
+  .cover h1{font-size:42px;font-weight:700;line-height:1.32;margin-bottom:22px;}
+  .cover .meta{font-size:15px;color:#E6EDF5;line-height:2;}
+  .cover .meta span{color:#9FB2C8;}
+  .cover .side{width:200px;display:flex;flex-direction:column;justify-content:center;gap:16px;background:rgba(255,255,255,.06);border-radius:10px;padding:24px;}
+  .cover .side .box{text-align:center;}
+  .cover .side .num{font-size:38px;font-weight:700;color:#fff;}
+  .cover .side .lab{font-size:11px;color:#9FB2C8;margin-top:3px;}
+  .cover .footline{display:flex;justify-content:space-between;padding:14px 54px;font-size:12px;color:#9FB2C8;border-top:1px solid rgba(255,255,255,.14);}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="tt">GeoAirFormer · 京津冀PM2.5浓度预测 · 中期答辩</div>
+  <div class="nav">
+    <button onclick="jump(cur-1)">&#8249;</button>
+    <span class="pg" id="pgnum">1 / 22</span>
+    <button onclick="jump(cur+1)">&#8250;</button>
+  </div>
+</div>
+
+<div class="deck" id="deck"></div>
+
+<script>
+const IMG="https://tg.corp.kuaishou.com/rest/flow/api/v1/sandbox/download?userName=zhangxiaoqi06&path=/data_agent/users/sessions/31498479/outputs/generated/";
+const F=p=>IMG+p;
+const fig=(s,c)=>`<div class="fig"><img src="${F(s)}" alt="${c}"><div class="cap">${c}</div></div>`;
+const H=(t,tag)=>`<div class="slide-head"><div class="t">${t}</div><div class="tag">${tag}</div></div>`;
+const FTR=n=>`<div class="slide-foot"><span>GeoAirFormer · 京津冀PM2.5浓度预测 · 中期答辩</span><span>${n} / 22</span></div>`;
+
+const S=[];
+
+// 1 封面
+S.push(`<div class="slide cover">
+<div class="inner">
+  <div class="main">
+    <div class="kicker">研究生学位论文 · 中期答辩</div>
+    <h1>基于地理语义增强时空Transformer的<br>京津冀PM2.5浓度预测研究</h1>
+    <div class="meta">答辩人：张筱琦<br><span>研究领域：时空序列预测 · 深度学习 · 大气环境</span><br><span>2026年9月</span></div>
+  </div>
+  <div class="side">
+    <div class="box"><div class="num">193</div><div class="lab">监测站点</div></div>
+    <div class="box"><div class="num">4年</div><div class="lab">逐小时观测</div></div>
+    <div class="box"><div class="num">3项</div><div class="lab">核心创新</div></div>
+  </div>
+</div>
+<div class="footline"><span>GeoAirFormer</span><span>PM2.5 Prediction · Beijing-Tianjin-Hebei</span></div>
+</div>`);
+
+// 2 提纲
+S.push(`<div class="slide">${H("汇报提纲","CONTENTS")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="justify-content:center;gap:14px;">
+    ${[["01","研究背景与动机","PM2.5危害 · 京津冀特殊性 · 现有方法缺口"],
+       ["02","研究目标与内容","数据集 · 模型 · 实验方案"],
+       ["03","GeoAirFormer 模型","整体架构与三项核心创新"]].map(x=>`
+      <div class="card soft" style="display:flex;gap:16px;align-items:center;padding:16px;">
+        <div style="font-size:24px;font-weight:700;color:var(--blue);">${x[0]}</div>
+        <div><div style="font-weight:600;color:var(--navy);font-size:15px;">${x[1]}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:3px;">${x[2]}</div></div>
+      </div>`).join("")}
+  </div>
+  <div class="col" style="justify-content:center;gap:14px;">
+    ${[["04","数据分析发现","时空耦合特征 · 气象驱动机制"],
+       ["05","实验结果与分析","对比 · 消融 · 多步 · 季节 · 案例"],
+       ["06","问题与计划","不足 · 下一步 · 预期成果"]].map(x=>`
+      <div class="card soft" style="display:flex;gap:16px;align-items:center;padding:16px;">
+        <div style="font-size:24px;font-weight:700;color:var(--orange);">${x[0]}</div>
+        <div><div style="font-weight:600;color:var(--navy);font-size:15px;">${x[1]}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:3px;">${x[2]}</div></div>
+      </div>`).join("")}
+  </div>
+</div></div>${FTR(2)}</div>`);
+
+// 3 背景
+S.push(`<div class="slide">${H("研究背景：PM2.5污染与京津冀的特殊性","01")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="justify-content:center;">
+    <div class="sec">PM2.5 — 第四大健康风险因子</div>
+    <div class="lead">全球每年致 <b style="color:var(--orange);">400万+</b> 人过早死亡，且<b style="color:var(--orange);">无安全阈值</b>；WHO已将年均指导值收严至 5 μg/m³。</div>
+    <div class="sec" style="margin-top:16px;">京津冀为何是治理难点</div>
+    <ul class="pts">
+      <li class="key"><b>三面环山</b>（太行山+燕山），静稳天气难扩散</li>
+      <li>河北钢铁产量占全国 1/4，叠加散煤取暖与2800万机动车</li>
+      <li class="key"><b>区域传输贡献 40%–60%</b>，是典型区域性问题</li>
+      <li>全国年均 72(2013)→30(2023)，京津冀仍是最重区域之一</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><div class="ct">研究价值</div><p>精准区域预报 → 支撑政府应急减排 + 公众健康防护</p></div>
+  </div>
+  <div class="col">${fig("web_figs/p30_0.jpg","2022–2025年京津冀PM2.5月均浓度（U型季节规律）")}</div>
+</div></div>${FTR(3)}</div>`);
+
+// 4 方法缺口
+S.push(`<div class="slide">${H("现有方法的局限与研究缺口","01")}
+<div class="slide-body">
+  <div style="display:flex;gap:14px;">
+    ${[["数值模式","CMAQ / WRF-Chem","物理机理完备，但依赖精确排放清单，单次模拟耗时数小时至数天，无法实时"],
+       ["统计方法","ARIMA / 随机森林","实现简单但本质线性假设，抓不住非线性，多站点联合建模能力有限"],
+       ["时空图神经网络","GWNet / DCRNN / STGCN","仅局部邻域聚合，固定图结构无法捕捉动态相关性，难兼顾长短程交互"]].map(x=>`
+      <div class="card soft" style="flex:1;">
+        <div class="ct">${x[0]} <span style="font-weight:400;font-size:11px;color:var(--muted);">${x[1]}</span></div>
+        <p>${x[2]}</p>
+      </div>`).join("")}
+  </div>
+  <div class="card" style="margin-top:16px;border:1px solid #F0D7C4;">
+    <div class="ct" style="color:var(--orange);">本研究瞄准的两个缺口</div>
+    <ul class="pts" style="margin-top:6px;">
+      <li class="key"><b>缺口一</b>：AirFormer 仅在全国1085站点验证，区域193站点的适用性未考察</li>
+      <li class="sub">区域站点更密集、空间相关性更强、地形气象局地效应更突出</li>
+      <li class="key"><b>缺口二</b>：现有研究只做浓度回归，缺等级分类 + 重污染预警的联合建模</li>
+      <li class="sub">实际应用需三层次输出：精确浓度值 + AQI等级 + 重污染预警</li>
+    </ul>
+  </div>
+</div>${FTR(4)}</div>`);
+
+// 5 目标路线
+S.push(`<div class="slide">${H("研究目标与技术路线","02")}
+<div class="slide-body">
+  <div class="sec">研究目标</div>
+  <div style="display:flex;gap:14px;">
+    ${["验证时空Transformer从<b>全国→区域</b>尺度的适用性","与<b>10个基线</b>系统对比，定量刻画性能差异","为京津冀预警应急管理提供<b>经实验验证</b>的技术框架"].map(t=>`
+      <div class="card soft" style="flex:1;"><p>${t}</p></div>`).join("")}
+  </div>
+  <div class="sec" style="margin-top:22px;">技术路线</div>
+  <div class="flow">
+    <div class="step"><div class="st">数据准备</div><div class="sd">国控站点+ERA5<br>气象+地理信息</div></div>
+    <div class="arrow">›</div>
+    <div class="step alt"><div class="st">数据分析</div><div class="sd">时空规律揭示<br>影响因子识别</div></div>
+    <div class="arrow">›</div>
+    <div class="step"><div class="st">模型构建</div><div class="sd">GeoAirFormer<br>三项创新设计</div></div>
+    <div class="arrow">›</div>
+    <div class="step alt"><div class="st">实验评估</div><div class="sd">对比·消融<br>多步·季节·案例</div></div>
+    <div class="arrow">›</div>
+    <div class="step"><div class="st">结论展望</div><div class="sd">贡献总结<br>局限与改进</div></div>
+  </div>
+  <div class="card" style="margin-top:16px;"><p><b>关键设计：</b>数据分析先于模型设计，让数据规律为模型提供物理依据，而非先定模型。</p></div>
+</div>${FTR(5)}</div>`);
+
+// 6 数据集
+S.push(`<div class="slide">${H("数据集：193站点多源时序数据","02")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="flex:1.12;">${fig("fig7_map.png","京津冀地形与监测站点空间分布示意")}</div>
+  <div class="col" style="justify-content:center;">
+    ${[["空气质量数据","193个国控站点 · 2022.1–2025.1 逐小时","PM2.5 / PM10 / NO2 / CO / O3 / SO2，来源：中国环境监测总站"],
+       ["气象数据","ERA5再分析（0.25°网格）","温度/湿度/风速/风向/气压/边界层高度，插值至站点"],
+       ["地理数据","站点属性与图结构","经纬度/海拔/功能区类型 + 高斯距离邻接 + K近邻邻接"]].map(x=>`
+      <div class="card" style="margin-bottom:12px;"><div class="ct">${x[0]} <span style="font-weight:400;font-size:11px;color:var(--muted);">${x[1]}</span></div><p>${x[2]}</p></div>`).join("")}
+    <div class="card soft"><div class="ct">特征工程</div><p>最终提取 <b>38维输入特征</b>：时间周期编码 + 滞后特征 + 滑动统计特征 + 空间属性。</p></div>
+  </div>
+</div></div>${FTR(6)}</div>`);
+
+// 7 时间特征
+S.push(`<div class="slide">${H("数据分析：时间维度特征","04")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="flex:1.15;">
+    <div style="display:flex;flex-direction:column;gap:12px;flex:1;">
+      ${fig("web_figs/p30_0.jpg","月均浓度U型季节规律（2022–2025）")}
+      ${fig("web_figs/p36_0.jpg","日内变化：早晚双峰模式")}
+    </div>
+  </div>
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>季节模式</b>：冬高夏低，U型周期</li>
+      <li class="sub">冬季 46.94 / 夏季 22.95 μg/m³，约 2.05 倍</li>
+      <li class="key"><b>年际下降</b>：整体波动下降</li>
+      <li class="sub">2025年1月较2022年同期降 <b>32.8%</b>，减排政策累积效应</li>
+      <li class="key"><b>日内双峰</b>：早高峰 + 夜高峰</li>
+      <li class="sub">早 07–09时（交通排放+边界层低）；夜 21–23时（扩散减弱）</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><p><b>→ 物理依据：</b>多时间尺度并存，支持多尺度时间注意力设计。</p></div>
+  </div>
+</div></div>${FTR(7)}</div>`);
+
+// 8 空间特征
+S.push(`<div class="slide">${H("数据分析：空间维度特征","04")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="flex:1.15;">
+    <div style="display:flex;flex-direction:column;gap:12px;flex:1;">
+      ${fig("web_figs/p32_0.jpg","年均PM2.5空间分布：南高北低（2022–2024）")}
+      ${fig("web_figs/p43_0.jpg","空间自相关 LISA 聚类分析")}
+    </div>
+  </div>
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>南高北低梯度</b>：稳定空间不均衡</li>
+      <li class="sub">邯郸/邢台/石家庄最高；张家口/承德最低，南北差 <b>2.5 倍</b></li>
+      <li class="key"><b>空间正相关强</b>：季节分异显著</li>
+      <li class="sub">Moran's I：冬季 <b>0.809</b>，夏季 0.471</li>
+      <li class="sub">冬季南部平原形成大范围高高聚集</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><p><b>→ 物理依据：</b>强正相关支持图注意力传信息；南北梯度提示需方向感知注意力。</p></div>
+  </div>
+</div></div>${FTR(8)}</div>`);
+
+// 9 气象驱动
+S.push(`<div class="slide">${H("数据分析：气象驱动因子","04")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="flex:1.15;">${fig("web_figs/p47_0.jpg","关键气象要素与PM2.5的散点关系（非线性响应）")}</div>
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>边界层高度</b>（r = −0.233，最强因子）</li>
+      <li class="sub">越低扩散越差，冬季频繁 &lt;200m 是重污染关键诱因，显著非线性</li>
+      <li class="key"><b>相对湿度</b>（r = +0.233）</li>
+      <li class="sub">促进 SO2/NO2 液相转化为二次无机气溶胶，二次组分占比 &gt;60%</li>
+      <li><b>气压</b>（r = +0.167）：高压下沉气流不利扩散</li>
+      <li><b>温度</b>（r = −0.159）：非线性、非单调</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><p><b>→ 核心：</b>气象与PM2.5为 <b style="color:var(--orange);">非线性</b> 关系，是深度学习相对线性模型的核心优势。</p></div>
+  </div>
+</div></div>${FTR(9)}</div>`);
+
+// 10 模型总览
+S.push(`<div class="slide">${H("GeoAirFormer：整体架构","03")}
+<div class="slide-body">
+  <div class="fig" style="flex:1;">${fig("fig8_architecture.png","GeoAirFormer 模型整体架构示意图")}</div>
+  <div style="display:flex;gap:14px;margin-top:14px;">
+    <div class="card" style="flex:1;"><div class="ct">① GSE-MSA</div><p>地理语义增强空间注意力 · 多源地理先验 + 飞镖盘方向感知</p></div>
+    <div class="card" style="flex:1;"><div class="ct">② CrossAttn</div><p>因果时间多头注意力 · 时间衰减偏置 + 多尺度联合建模</p></div>
+    <div class="card" style="flex:1;"><div class="ct">③ MTL 框架</div><p>多任务学习 · 三任务共享 + 自适应损失权重</p></div>
+  </div>
+</div>${FTR(10)}</div>`);
+
+// 11 GSE-MSA
+S.push(`<div class="slide">${H("创新点一：地理语义增强空间注意力 GSE-MSA","03")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>问题</b>：原飞镖盘注意力只认距离-方位，忽略多源地理先验</li>
+      <li class="key"><b>改进1 · 多源地理邻接矩阵</b></li>
+      <li class="sub">高斯距离邻接 A_gauss = exp(−d²/2σ²)  +  K近邻邻接 A_knn（top-5）</li>
+      <li class="sub">可学习自适应融合 A = α·A_gauss + β·A_knn，作为注意力偏置注入</li>
+      <li class="key"><b>改进2 · 飞镖盘8方位方向感知</b></li>
+      <li class="sub">近处4个细粒度扇区 + 远处4个粗粒度，契合污染主导风向</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><div class="ct">效果</div><p>复杂度 O(N²)→O(N)；消融显示 MAE <em>降 7.0%</em>。</p></div>
+  </div>
+  <div class="col">${fig("web_figs/p32_0.jpg","地理先验依据：南高北低梯度 + 主导风向传输")}</div>
+</div></div>${FTR(11)}</div>`);
+
+// 12 CrossAttn
+S.push(`<div class="slide">${H("创新点二：因果时间多头注意力 CrossAttn","03")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>问题</b>：PM2.5同时含短期波动与长期趋势，单一尺度不足</li>
+      <li class="key"><b>双分支多尺度建模</b></li>
+      <li class="sub">短期分支（1–6h窗口）抓波动；长期分支（24h窗口）抓趋势，交叉注意力融合</li>
+      <li class="key"><b>因果掩码</b>：下三角矩阵，保证不"偷看"未来</li>
+      <li class="key"><b>时间衰减偏置</b>：bias = −λ_head·|i−j|，多头各自适应不同跨度</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><div class="ct">消融验证（最关键组件）</div><p>移除后 MAE <em>增 8.8%</em>；多步衰减率 175%（vs GWNet 188%）。</p></div>
+  </div>
+  <div class="col">${fig("web_figs/p68_0.jpg","各模型1–24h预测MAE随步长的增长趋势")}</div>
+</div></div>${FTR(12)}</div>`);
+
+// 13 MTL
+S.push(`<div class="slide">${H("创新点三：多任务学习框架 MTL","03")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>三任务共享编码器</b>：浓度回归 + AQI等级分类 + 重污染检测</li>
+      <li class="key"><b>基于不确定性的自适应损失权重</b></li>
+      <li class="sub">L = Σ(−logσ_k + L_k/σ_k²)，动态平衡梯度，避免某任务过早收敛</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><div class="ct">消融验证</div><p>MTL 使 Macro-F1 <em>提升 7.7pp</em>（62.1%→69.8%），回归仅退化2.8%。</p></div>
+    <div class="card soft" style="margin-top:10px;"><div class="ct">分类结论</div><p>跨两级误分 &lt;1%，不会出现"优"误判"重度"的严重错误。</p></div>
+  </div>
+  <div class="col">${fig("fig6_confusion.png","AQI等级分类混淆矩阵热力图（行归一化%）")}</div>
+</div></div>${FTR(13)}</div>`);
+
+// 14 整体结果
+S.push(`<div class="slide">${H("实验结果：整体预测性能 — 全面最优","05")}
+<div class="slide-body">
+  <div class="fig" style="flex:1.15;">${fig("fig1_model_compare.png","10个基线模型与GeoAirFormer的MAE（左）与R²（右）对比")}</div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">7.82<em>μg/m³</em></div><div class="l">24h MAE</div><div class="s">较GWNet ↓9.6%</div></div>
+    <div class="kpi"><div class="v">0.941</div><div class="l">24h R²</div><div class="s">较GWNet ↑1.4pp</div></div>
+    <div class="kpi hl"><div class="v">69.8%</div><div class="l">AQI Macro-F1</div><div class="s">较GWNet ↑6.6pp</div></div>
+  </div>
+  <div class="card" style="margin-top:12px;"><p><b>关键规律：</b>时空图模型整体优于纯时序模型（Informer vs GWNet 的 MAE 差 15.9%），空间依赖信息对预测价值显著。</p></div>
+</div>${FTR(14)}</div>`);
+
+// 15 消融
+S.push(`<div class="slide">${H("消融实验：各核心组件贡献验证","05")}
+<div class="slide-body">
+  <div class="fig" style="flex:1.2;">${fig("fig4_ablation.png","四个消融变体在MAE（左）、R²（中）、Macro-F1（右）的对比")}</div>
+  <div style="display:flex;gap:12px;margin-top:12px;">
+    ${[["CrossAttn（最关键）","MAE +8.8%","var(--red)"],["GeoAdj","MAE +7.0%","var(--blue)"],["MTL（对分类突出）","Macro-F1 −7.7pp","var(--orange)"],["Adaptiveλ","MAE +1.7%，稳定改善","var(--green)"]].map(x=>`
+      <div class="card soft" style="flex:1;"><div class="ct">${x[0]}</div><p style="color:${x[2]};font-weight:600;">${x[1]}</p></div>`).join("")}
+  </div>
+</div>${FTR(15)}</div>`);
+
+// 16 多步
+S.push(`<div class="slide">${H("实验分析：多步预测性能与衰减特性","05")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="flex:1.25;">${fig("fig2_multistep.png","各模型1–24h预测MAE随步长的增长曲线")}</div>
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>GeoAirFormer 衰减率最低</b></li>
+      <li class="sub">衰减率 Δ = (MAE₂₄h−MAE₁h)/MAE₁h = <b>175%</b></li>
+      <li class="sub">LSTM 201% / Informer 199% / DCRNN 184% / GWNet 188%</li>
+      <li class="key"><b>时步越大，时空模型优势越突出</b></li>
+      <li class="sub">1h 时 vs Informer 差距 1.16；24h 时扩大至 <b>4.44 μg/m³</b></li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><p><b>机制：</b>短期预测由本地过程驱动，中长期区域传输效应显现，空间信息愈发重要。</p></div>
+  </div>
+</div></div>${FTR(16)}</div>`);
+
+// 17 季节
+S.push(`<div class="slide">${H("实验分析：季节性预测性能与冬季优势","05")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="flex:1.25;">${fig("fig3_seasonal.png","各季节预测MAE与PM2.5均值（橙线）")}</div>
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>夏季精度最高，冬季最低</b></li>
+      <li class="sub">夏：MAE 5.63 / R² 0.956；冬：MAE 10.28 / R² 0.925</li>
+      <li class="key"><b>冬季优势最突出</b></li>
+      <li class="sub">冬季 vs GWNet：MAE 降 <b>15.3%</b>（全年平均 9.6%）</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><p><b>原因：</b>冬季 Moran's I=0.809 空间正相关最强，地理先验 + 方向注意力价值被放大。</p></div>
+  </div>
+</div></div>${FTR(17)}</div>`);
+
+// 18 空间
+S.push(`<div class="slide">${H("实验分析：空间预测性能差异","05")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="flex:1.2;">${fig("web_figs/p76_0.jpg","各监测站点PM2.5预测MAE空间热力分布")}</div>
+  <div class="col" style="justify-content:center;">
+    <ul class="pts">
+      <li class="key"><b>省份维度</b>：北京 7.14（最优） / 山西 8.87（最低）</li>
+      <li class="key"><b>站点类型维度</b></li>
+      <li class="sub">区域背景点：MAE 6.35 / R² 0.958（最优）</li>
+      <li class="sub">城市评价点：MAE 7.68；交通污染点：MAE 9.14（受短时波动影响）</li>
+    </ul>
+    <div class="card" style="margin-top:12px;"><p><b>规律：</b>误差与浓度正相关，各省相对误差约 16%–19%，空间一致性较好。</p></div>
+  </div>
+</div></div>${FTR(18)}</div>`);
+
+// 19 案例
+S.push(`<div class="slide">${H("典型案例：冬季重污染与春季沙尘传输","05")}
+<div class="slide-body">
+  <div style="display:flex;flex-direction:column;gap:10px;flex:1;">
+    ${fig("web_figs/p84_0.jpg","案例一：冬季区域性重污染预测（石家庄，2025.2.12–18）")}
+    ${fig("web_figs/p85_0.jpg","案例二：春季沙尘传输预测（北京，2025.4.3–7）")}
+  </div>
+  <div style="display:flex;gap:14px;margin-top:12px;">
+    <div class="card" style="flex:1;"><div class="ct">案例一 · 冬季重污染</div><p>峰值 260 μg/m³，GeoAirFormer 峰值偏差 <em>6.5%</em>（vs GWNet 15% / Informer 29%）。</p></div>
+    <div class="card" style="flex:1;"><div class="ct">案例二 · 春季沙尘</div><p>3小时从30飙至180，提前12h捕捉趋势，峰值偏差 <em>18%</em>（vs GWNet 32% / Informer 45%）。</p></div>
+  </div>
+</div>${FTR(19)}</div>`);
+
+// 20 不足
+S.push(`<div class="slide">${H("存在问题与下一步改进计划","06")}
+<div class="slide-body">
+  <table class="g">
+    <tr><th style="width:20%;">不足与问题</th><th style="width:34%;">原因分析</th><th style="width:35%;">改进方案</th><th style="width:11%;">优先级</th></tr>
+    <tr><td><b>外源突发事件预测不足</b></td><td>沙尘峰值偏差约18%，缺高空传输通道</td><td>引入高空气象再分析 + 卫星AOD数据</td><td><span class="tagp p0">优先</span></td></tr>
+    <tr><td><b>地形阻隔利用不充分</b></td><td>地形邻接用全连通替代</td><td>接入高分辨率DEM，按地形通视性建邻接</td><td><span class="tagp p1">次优先</span></td></tr>
+    <tr><td><b>可解释性偏定性</b></td><td>注意力分析停留定性层面</td><td>引入SHAP等方法做定量特征归因</td><td><span class="tagp p2">计划中</span></td></tr>
+    <tr><td><b>预测时效有限（24h）</b></td><td>应急管理需72小时预报</td><td>拓展至72h，结合数值预报做混合框架</td><td><span class="tagp p2">计划中</span></td></tr>
+    <tr><td><b>跨区域泛化未验证</b></td><td>仅京津冀实验</td><td>长三角/珠三角/成渝迁移实验</td><td><span class="tagp p2">后续</span></td></tr>
+  </table>
+</div>${FTR(20)}</div>`);
+
+// 21 小结
+S.push(`<div class="slide">${H("工作进度与预期成果","06")}
+<div class="slide-body"><div class="cols">
+  <div class="col" style="justify-content:center;">
+    <div class="sec" style="color:var(--green);">已完成</div>
+    <ul class="pts">
+      <li>数据集构建：193站点×3年×38维特征</li>
+      <li>数据分析：时空耦合特征 + Moran's I + 气象驱动</li>
+      <li>模型实现：GeoAirFormer 三项创新（训练4.5h，推理0.8s/时步）</li>
+      <li>核心实验：10基线对比 + 4消融 + 多步/季节/空间/案例</li>
+    </ul>
+  </div>
+  <div class="col" style="justify-content:center;">
+    <div class="sec" style="color:var(--orange);">下一步</div>
+    <ul class="pts">
+      <li>补充实验：地形DEM + AOD卫星 + 72h时效</li>
+      <li>跨区域迁移验证</li>
+      <li>论文撰写与图表优化</li>
+      <li>定稿与提交</li>
+    </ul>
+  </div>
+</div>
+<div class="card" style="margin-top:16px;">
+  <div class="ct">预期成果</div>
+  <p>一篇学位论文 + <b>GeoAirFormer</b>：京津冀 PM2.5 浓度预测 + AQI 等级分类 + 重污染预警的多层次联合框架，三项创新点填补区域尺度时空预测的方法论缺口。</p>
+</div>
+</div>${FTR(21)}</div>`);
+
+// 22 致谢
+S.push(`<div class="slide cover" style="justify-content:center;align-items:center;text-align:center;">
+  <div style="font-size:38px;font-weight:700;color:#fff;margin-bottom:16px;">感谢各位老师的聆听与指导！</div>
+  <div style="font-size:18px;color:#C5D9F0;margin-bottom:30px;">恳请批评指正</div>
+  <div style="display:flex;gap:16px;">
+    ${[["MAE 7.82","μg/m³"],["R² 0.941",""],["Macro-F1","69.8%"]].map(x=>`
+      <div style="background:rgba(255,255,255,.08);border-radius:8px;padding:12px 20px;">
+        <div style="font-size:20px;font-weight:700;color:#fff;">${x[0]}</div>
+        <div style="font-size:11px;color:#9FB2C8;margin-top:3px;">${x[1]}</div>
+      </div>`).join("")}
+  </div>
+  <div style="margin-top:30px;color:#9FB2C8;font-size:13px;">答辩人：张筱琦 · 2026年9月 · 时空预测 / 深度学习 / 大气环境</div>
+</div>`);
+
+document.getElementById("deck").innerHTML=S.join("");
+const slides=[...document.querySelectorAll(".slide")];
+const pgEl=document.getElementById("pgnum");
+let cur=0;
+function jump(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides[cur].scrollIntoView({behavior:"smooth",block:"center"});
+  pgEl.textContent=(cur+1)+" / "+slides.length;
+}
+const deckEl=document.getElementById("deck");
+deckEl.addEventListener("scroll",()=>{
+  let best=0,bd=1e9;
+  const c=deckEl.getBoundingClientRect().top+deckEl.clientHeight/2;
+  slides.forEach((s,i)=>{
+    const r=s.getBoundingClientRect();
+    const d=Math.abs((r.top+r.height/2)-c);
+    if(d<bd){bd=d;best=i;}
+  });
+  if(best!==cur){cur=best;pgEl.textContent=(cur+1)+" / "+slides.length;}
+},{passive:true});
+document.addEventListener("keydown",e=>{
+  if(["ArrowRight","PageDown"," "].includes(e.key))jump(cur+1);
+  if(["ArrowLeft","PageUp"].includes(e.key))jump(cur-1);
+});
+</script>
+</body>
+</html>
