@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张筱琦 · 个人述职答辩 PPT</title>
+<script>window.adaptMobile = true;</script>
+<script>
+(function() {
+  var ua = navigator.userAgent;
+  function isInKimAppMobile() { return /Kim\/[\d.]+/.test(ua) && /Android|iPhone|iPad|iPod/i.test(ua); }
+  function normalizeUrl(rawUrl) {
+    try { var t = new URL(rawUrl, window.location.href); return ['http:','https:'].includes(t.protocol) ? t.href : null; }
+    catch(_) { return null; }
+  }
+  function openNewPage(rawUrl) {
+    var url = normalizeUrl(rawUrl);
+    if (!url) return;
+    var invoke = window.KSYoda && window.KSYoda.invoke;
+    if (isInKimAppMobile() && invoke) {
+      try { invoke('webview.open', { url: url }); return; } catch(e){}
+    }
+    var opened = window.open(url, '_blank', 'noopener,noreferrer');
+    if (opened) opened.opener = null;
+  }
+  function handleAnchorClick(event) {
+    var a = event.target && event.target.closest && event.target.closest('a[target="_blank"]');
+    if (!a) return;
+    var url = normalizeUrl(a.getAttribute('href'));
+    if (!url) { event.preventDefault(); return; }
+    event.preventDefault(); openNewPage(url);
+  }
+  if (isInKimAppMobile()) document.addEventListener('click', handleAnchorClick, true);
+  window.__openNewPage = openNewPage; window.__kimOpenNewPage = openNewPage;
+})();
+</script>
+<style>
+:root{
+  --bg:#F6F4EF;
+  --card:#FFFFFF;
+  --ink:#1F2733;
+  --dim:#6B7480;
+  --faint:#9AA3AE;
+  --accent:#FF5C28;
+  --teal:#10B981;
+  --gold:#F5A623;
+  --blue:#3B5BDB;
+  --line:rgba(31,39,51,.08);
+  --shadow:0 10px 30px rgba(31,39,51,.06);
+  --font:'Noto Sans CJK SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
+  --font-num:'DIN Alternate','Noto Sans CJK SC','Helvetica Neue',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;background:#ECE9E2;overflow:hidden;}
+body{font-family:var(--font);-webkit-text-size-adjust:100%;}
+
+.viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#E8E5DD;}
+.stage{position:relative;width:1280px;height:720px;transform-origin:center center;}
+
+.slide{position:absolute;inset:0;background:var(--bg);color:var(--ink);opacity:0;visibility:hidden;transform:translateX(40px);transition:opacity .5s ease, transform .5s ease, visibility .5s;overflow:hidden;border-radius:4px;}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0);z-index:2;}
+.slide.prev{transform:translateX(-40px);}
+
+.slide .topband{position:absolute;left:0;top:0;right:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--gold),var(--teal),var(--blue));}
+.content{position:absolute;left:0;top:6px;right:0;bottom:0;padding:42px 56px 46px 56px;z-index:2;}
+
+.secmark{position:absolute;left:0;top:6px;bottom:0;width:52px;display:flex;align-items:center;justify-content:center;z-index:1;}
+.secmark .word{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;letter-spacing:.32em;color:var(--faint);font-weight:600;}
+.secmark .dot{position:absolute;top:42px;width:10px;height:10px;border-radius:50%;background:var(--accent);}
+
+.progress{position:absolute;left:52px;right:0;top:6px;height:3px;background:rgba(31,39,51,.06);z-index:4;}
+.progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .5s ease;}
+
+.pageno{position:absolute;right:30px;bottom:18px;z-index:4;font-family:var(--font-num);font-weight:700;font-size:14px;color:var(--faint);}
+.pageno b{font-size:30px;color:var(--ink);}
+.hint{position:absolute;left:66px;bottom:18px;z-index:4;font-size:11px;color:var(--faint);letter-spacing:.08em;}
+
+.tag{display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.22em;color:var(--accent);font-weight:700;}
+.tag::before{content:"";width:22px;height:3px;border-radius:2px;background:var(--accent);}
+.tag.teal{color:var(--teal);}.tag.teal::before{background:var(--teal);}
+.tag.gold{color:var(--gold);}.tag.gold::before{background:var(--gold);}
+.tag.blue{color:var(--blue);}.tag.blue::before{background:var(--blue);}
+
+h1.title{font-size:46px;line-height:1.18;font-weight:900;letter-spacing:.01em;margin:16px 0 6px;color:var(--ink);}
+h1.title .thin{font-weight:400;}
+h2.title{font-size:32px;line-height:1.25;font-weight:800;margin:14px 0 6px;color:var(--ink);}
+.sub{font-size:15px;color:var(--dim);line-height:1.7;margin-top:6px;max-width:900px;}
+.accent{color:var(--accent);}.teal-c{color:var(--teal);}.gold-c{color:var(--gold);}.blue-c{color:var(--blue);}
+
+.kpis{display:flex;gap:16px;margin-top:24px;}
+.kpi{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent);}
+.kpi.teal::before{background:var(--teal);}
+.kpi.gold::before{background:var(--gold);}
+.kpi.blue::before{background:var(--blue);}
+.kpi .num{font-family:var(--font-num);font-size:40px;font-weight:800;color:var(--ink);line-height:1;}
+.kpi.accent .num{color:var(--accent);}
+.kpi.teal .num{color:var(--teal);}
+.kpi.gold .num{color:var(--gold);}
+.kpi.blue .num{color:var(--blue);}
+.kpi .num small{font-size:17px;font-weight:600;color:var(--dim);margin-left:3px;}
+.kpi .lbl{margin-top:10px;font-size:14px;color:var(--ink);font-weight:600;}
+.kpi .cap{font-size:12px;color:var(--faint);margin-top:5px;line-height:1.5;}
+
+.grid{display:grid;gap:16px;margin-top:22px;}
+.g2{grid-template-columns:1fr 1fr;}
+.g3{grid-template-columns:1fr 1fr 1fr;}
+.g4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow);position:relative;}
+.card h4{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);}
+.card h4 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:1px;}
+.card.teal h4 .dot{background:var(--teal);}
+.card.gold h4 .dot{background:var(--gold);}
+.card.blue h4 .dot{background:var(--blue);}
+.card p{font-size:13.5px;color:var(--dim);line-height:1.7;}
+.card .big{font-family:var(--font-num);font-size:32px;font-weight:800;color:var(--accent);}
+.card .big.teal{color:var(--teal);}
+.card .big.gold{color:var(--gold);}
+.card .big.blue{color:var(--blue);}
+.card .meta{margin-top:8px;font-size:12px;color:var(--faint);}
+
+/* CSS 条形图 */
+.barchart{display:flex;flex-direction:column;gap:20px;padding:12px 8px;}
+.bar-row{display:grid;grid-template-columns:96px 1fr 70px;align-items:center;gap:14px;}
+.bar-row .bar-label{font-size:14px;color:var(--ink);font-weight:600;text-align:right;}
+.bar-row .bar-track{height:36px;background:#F1EFE9;border-radius:9px;overflow:hidden;}
+.bar-row .bar-fill{height:100%;border-radius:9px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;transition:width 1s ease;min-width:8px;}
+.bar-row .bar-val{font-family:var(--font-num);font-weight:800;font-size:16px;color:var(--ink);}
+.bar-fill.teal{background:linear-gradient(90deg,#0aa578,var(--teal));}
+.bar-fill.orange{background:linear-gradient(90deg,#f04818,var(--accent));}
+.bar-fill.gold{background:linear-gradient(90deg,#d9900b,var(--gold));}
+.bar-fill.gray{background:linear-gradient(90deg,#c3c9d1,#d5dae1);}
+.bar-fill.blue{background:linear-gradient(90deg,#2f48c2,var(--blue));}
+
+/* 分组柱状 */
+.groupbar{display:flex;justify-content:space-around;align-items:flex-end;gap:8px;padding:14px 10px 0;}
+.groupbar .gb{display:flex;flex-direction:column;align-items:center;gap:8px;width:120px;}
+.groupbar .gb .gb-label{font-size:14px;font-weight:700;color:var(--ink);}
+.groupbar .gb .gb-bars{display:flex;align-items:flex-end;gap:6px;height:200px;}
+.groupbar .gb .gb-col{width:26px;border-radius:6px 6px 0 0;position:relative;transition:height 1s ease;}
+.groupbar .gb .gb-col .gb-tag{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-family:var(--font-num);font-size:11px;font-weight:700;color:var(--dim);white-space:nowrap;}
+.groupbar .gb .gb-leg{font-size:11px;color:var(--faint);}
+.groupbar .legends{display:flex;gap:16px;justify-content:center;margin-top:6px;font-size:12px;color:var(--dim);}
+.groupbar .legends i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px;}
+
+.flow{display:flex;align-items:stretch;gap:12px;margin-top:26px;}
+.flow .step{flex:1;position:relative;padding:20px 20px;border:1px solid var(--line);background:var(--card);border-radius:14px;box-shadow:var(--shadow);}
+.flow .step .no{font-family:var(--font-num);font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.1em;}
+.flow .step h4{margin-top:9px;font-size:16px;font-weight:700;color:var(--ink);}
+.flow .step p{margin-top:6px;font-size:12.5px;color:var(--dim);line-height:1.6;}
+.flow .step .arr{position:absolute;right:-12px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:18px;font-weight:700;z-index:2;}
+
+.formula{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;box-shadow:var(--shadow);}
+.formula .eq{font-family:var(--font-num);font-size:18px;color:var(--ink);font-weight:700;}
+.formula .note{margin-top:9px;font-size:13px;color:var(--dim);line-height:1.65;}
+
+.ulist{margin-top:18px;}
+.ulist li{list-style:none;position:relative;padding-left:26px;margin-bottom:12px;font-size:14.5px;color:var(--ink);line-height:1.65;}
+.ulist li::before{content:"";position:absolute;left:2px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--accent);}
+.ulist li .dim{color:var(--dim);}
+.ulist li b{color:var(--accent);font-weight:600;}
+.ulist.teal li::before{background:var(--teal);}
+.ulist.gold li::before{background:var(--gold);}
+.ulist.blue li::before{background:var(--blue);}
+
+.bio{display:grid;grid-template-columns:300px 1fr;gap:30px;margin-top:22px;}
+.bio .left{border-right:1px solid var(--line);padding-right:28px;}
+.bio .left .avatar{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#fff;margin-bottom:18px;box-shadow:var(--shadow);}
+.bio .left h5{font-size:12px;color:var(--faint);letter-spacing:.1em;margin:14px 0 7px;font-weight:700;}
+.bio .left p{font-size:13.5px;color:var(--dim);line-height:1.7;}
+.bio .right .pill{display:inline-block;padding:6px 14px;border-radius:18px;font-size:12.5px;color:var(--ink);background:var(--card);border:1px solid var(--line);margin:0 8px 8px 0;font-weight:600;}
+
+.reveal .rv{opacity:0;transform:translateY(18px);}
+.slide.active .rv{animation:rise .6s ease forwards;}
+@keyframes rise{to{opacity:1;transform:translateY(0);}}
+.slide.active .rv:nth-child(1){animation-delay:.04s;}
+.slide.active .rv:nth-child(2){animation-delay:.10s;}
+.slide.active .rv:nth-child(3){animation-delay:.16s;}
+.slide.active .rv:nth-child(4){animation-delay:.22s;}
+.slide.active .rv:nth-child(5){animation-delay:.28s;}
+.slide.active .rv:nth-child(6){animation-delay:.34s;}
+
+.navbtn{position:absolute;bottom:18px;right:110px;display:flex;gap:8px;z-index:5;}
+.navbtn button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-size:16px;transition:.2s;box-shadow:var(--shadow);}
+.navbtn button:hover{background:var(--accent);border-color:var(--accent);color:#fff;}
+</style>
+</head>
+<body>
+<div class="viewport">
+  <div class="stage" id="stage">
+
+    <!-- 01 封面 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">开篇</span><span class="dot"></span></div>
+      <div class="content" style="display:flex;flex-direction:column;justify-content:center;position:relative;">
+        <div class="rv"><span class="tag">内部晋升 · 述职答辩</span></div>
+        <div class="rv"><h1 class="title">张筱琦 · <span class="thin">个人述职</span></h1></div>
+        <div class="rv"><p class="sub">中国地质大学（北京）应用统计硕士 ｜ 快手电商经营策略中心 商业分析</p></div>
+        <div class="rv" style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap;">
+          <span style="padding:9px 18px;background:var(--accent);border-radius:22px;font-size:14px;color:#fff;font-weight:600;">因果实验 · DID</span>
+          <span style="padding:9px 18px;background:var(--teal);border-radius:22px;font-size:14px;color:#fff;font-weight:600;">目标测算</span>
+          <span style="padding:9px 18px;background:var(--gold);border-radius:22px;font-size:14px;color:#fff;font-weight:600;">经营归因</span>
+          <span style="padding:9px 18px;background:var(--blue);border-radius:22px;font-size:14px;color:#fff;font-weight:600;">AI 提效</span>
+        </div>
+        <div class="rv" style="margin-top:56px;font-size:14px;color:var(--faint);">汇报人：张筱琦 ｜ 电商经营策略中心 ｜ 2026</div>
+      </div>
+      <div class="pageno">01 / <b>16</b></div>
+    </section>
+
+    <!-- 02 个人简介 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">简介</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag">Profile · 个人简介</span></div>
+        <div class="rv bio">
+          <div class="left">
+            <div class="avatar">张</div>
+            <h5>教育背景</h5>
+            <p>中国地质大学（北京）<br>应用统计 / 硕士<br>2024.09 - 2027.06</p>
+            <p style="margin-top:8px;">湖北大学<br>国际经济与贸易 / 本科<br>2020.09 - 2024.06</p>
+            <h5>实习经历</h5>
+            <p>快手 · 电商经营策略中心<br>商业分析 · 2026.04 - 至今</p>
+            <p style="margin-top:8px;">滴滴 · 战略发展部<br>数据分析 · 2025.09 - 2026.01</p>
+          </div>
+          <div class="right">
+            <div class="pill">因果推断 DID</div><div class="pill">AB 实验</div><div class="pill">YoY / AA 归因</div><div class="pill">SQL / Python</div><div class="pill">AI Agent</div>
+            <ul class="ulist" style="margin-top:22px;">
+              <li><b>经管 + 统计复合背景</b>：不只具备数据处理能力，也习惯<span class="accent">从商业逻辑出发</span>理解数据背后的业务本质</li>
+              <li><b>三条核心能力</b>：<span class="teal-c">因果实验与效果验证</span>、<span class="gold-c">经营异动归因与策略优化</span>、<span class="blue-c">AI 自动化提效</span></li>
+              <li><b>两段实习闭环</b>：快手（电商经营分析）+ 滴滴（出租车定价补贴），都跑通<span class="accent">"发现问题 → 验证 → 落地"</span>的数据驱动闭环</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pageno">02 / <b>16</b></div>
+    </section>
+
+    <!-- 03 工作全景 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">全景</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag">Overview · 工作全景</span></div>
+        <div class="rv"><h2 class="title">四个项目 + 一段滴滴，<span class="accent">一个闭环</span></h2></div>
+        <div class="rv grid g4">
+          <div class="card"><div class="big">+26.3%</div><h4 style="margin-top:8px;"><span class="dot"></span>灵顺 AI 运营</h4><p>AA+AB 实验 + DID 因果验证，输出分人群推广策略。</p></div>
+          <div class="card teal"><div class="big teal">85.99%</div><h4 style="margin-top:8px;"><span class="dot"></span>Q3 目标测算</h4><p>勤奋度目标耦合 GMV 测算，下发达人 / 精品指标。</p></div>
+          <div class="card gold"><div class="big gold">-133%</div><h4 style="margin-top:8px;"><span class="dot"></span>经营复盘归因</h4><p>WBR/MBR 多维下钻 + YoY AA 贡献度，定位拖累项。</p></div>
+          <div class="card blue"><div class="big blue">25min</div><h4 style="margin-top:8px;"><span class="dot"></span>AI Agent 提效</h4><p>6 个可复用 Skill，复盘 3-4h → 25min。</p></div>
+        </div>
+        <div class="rv" style="margin-top:20px;">
+          <div class="card blue"><h4><span class="dot"></span>滴滴 · 战略发展部</h4><p>出租车拼车定价补贴 + AB 实验 + 看板搭建，重点城市 GMV 占比 +60%。</p></div>
+        </div>
+        <div class="rv" style="margin-top:16px;font-size:14px;color:var(--dim);">贯穿主线：<span class="accent">用数据验证判断、把结论推向决策</span>，并持续把重复工作沉淀成可复用资产。</div>
+      </div>
+      <div class="pageno">03 / <b>16</b></div>
+    </section>
+
+    <!-- 04 项目一·设计 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">灵顺</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag">项目一 · 灵顺 AI 运营</span></div>
+        <div class="rv"><h2 class="title">AI 替代人工做功，<span class="accent">有没有用、能不能推</span></h2></div>
+        <div class="rv grid g2">
+          <div class="card"><h4><span class="dot"></span>背景</h4><p>快手一百多万中小商家，运营人力覆盖不过来。技术团队做了套 AI 工具，想替代部分人工运营动作（引导开播、辅助生产短视频）。工具有没有用、能不能规模化推，需要数据说话。</p></div>
+          <div class="card teal"><h4><span class="dot"></span>AA + AB 双组隔离</h4><p>从 14.7 万商家池筛出稳定商家，先抽小 A 组做 AA 自对比验证基线可比；再对剩余 7.9 万商家按场域分型同质同量分配，两组完全隔离避免溢出。</p></div>
+        </div>
+        <div class="rv flow">
+          <div class="step"><div class="no">STEP 1</div><h4>AA 自对比</h4><p>每组 5000，验证基线可比</p><span class="arr">›</span></div>
+          <div class="step"><div class="no">STEP 2</div><h4>AB 实验</h4><p>7.9 万商家分场域分配</p><span class="arr">›</span></div>
+          <div class="step"><div class="no">STEP 3</div><h4>DID 估计</h4><p>剥离大盘下行，估计净效应</p><span class="arr">›</span></div>
+          <div class="step"><div class="no">STEP 4</div><h4>人群刻画</h4><p>分型 + K-means，输出优先级</p></div>
+        </div>
+      </div>
+      <div class="pageno">04 / <b>16</b></div>
+    </section>
+
+    <!-- 05 项目一·方法结果 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">灵顺</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag">项目一 · 方法与结果</span></div>
+        <div class="rv"><h2 class="title">DID 剥离大盘，<span class="accent">+26.3%</span> 净效应</h2></div>
+        <div class="rv" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="card"><h4><span class="dot"></span>为什么用 DID</h4><p>实验期恰逢大盘下行，直接对比会把大盘趋势误计入 AI 效果。DID 用对照组吸收共同趋势，实验组超额变化才是净效应。</p></div>
+            <div class="card teal"><h4><span class="dot"></span>稳健性三板斧</h4><p>平行趋势检验（四子群 Wald p&gt;0.1）＋ Winsorize P99 截尾 + Log(1+x) ＋ Bonferroni / BH-FDR。</p></div>
+          </div>
+          <div class="card">
+            <div style="font-size:13px;font-weight:700;color:var(--faint);margin-bottom:4px;">大盘下行 vs AI 渗透商家</div>
+            <div class="barchart">
+              <div class="bar-row">
+                <span class="bar-label">AI 渗透商家</span>
+                <div class="bar-track"><div class="bar-fill teal" style="width:55%;"></div></div>
+                <span class="bar-val" style="color:var(--teal);">-5.3%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">大盘整体</span>
+                <div class="bar-track"><div class="bar-fill orange" style="width:100%;"></div></div>
+                <span class="bar-val" style="color:var(--accent);">-9.62%</span>
+              </div>
+            </div>
+            <div style="margin-top:14px;font-size:12.5px;color:var(--dim);">AI 渗透商家比大盘少跌约 <b class="accent">10pp</b>，下行更抗跌。</div>
+          </div>
+        </div>
+      </div>
+      <div class="pageno">05 / <b>16</b></div>
+    </section>
+
+    <!-- 06 项目一·人群与局限 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">灵顺</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag">项目一 · 人群与局限</span></div>
+        <div class="rv"><h2 class="title">分人群推广，<span class="accent">谁优先、谁要筛、谁先改</span></h2></div>
+        <div class="rv grid g3">
+          <div class="card teal"><div class="big teal">+36.2%</div><h4 style="margin-top:6px;"><span class="dot"></span>泛货架型 · 优先推全</h4><p>效应最强，勤奋度提升占比 94.2%，57% 原本无短视频行为的商家被 AI 从 0 拉到 1。</p></div>
+          <div class="card"><h4><span class="dot"></span>直播型 · 筛选推</h4><p>需筛选有开播基础的商家，做双工具协同渗透。</p></div>
+          <div class="card"><h4><span class="dot"></span>短视频型 · 先改内容</h4><p>勤奋度涨了但 GMV 正增占比仅 39%，瓶颈在内容质量。</p></div>
+        </div>
+        <div class="rv" style="margin-top:18px;padding:16px 22px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);">
+          <p style="font-size:13.5px;color:var(--dim);line-height:1.7;">局限（主动说）：<span class="accent">政策混叠</span> —— 实验期叠加新星计划等扶持，子群 DID 粗剥离后 15.4pp 降到 11.8pp，政策贡献约 23.6%，更严格该用 PSM-DID；<span class="dim">实验期 22 天偏短，短视频型时间复利已初现。</span></p>
+        </div>
+      </div>
+      <div class="pageno">06 / <b>16</b></div>
+    </section>
+
+    <!-- 07 项目二·测算逻辑 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">目标</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag teal">项目二 · 目标测算</span></div>
+        <div class="rv"><h2 class="title">Q3 勤奋度目标，<span class="teal-c">把 GMV 翻成过程指标</span></h2></div>
+        <div class="rv grid g2">
+          <div class="card"><h4><span class="dot"></span>为什么考勤奋度</h4><p>精品、达人都是人设型商家，靠主播个人 IP 直播带货，GMV 高度绑直播供给 —— 开播一断量就掉。</p></div>
+          <div class="card teal"><h4><span class="dot"></span>两条基础公式</h4><p>总推流时长 = 开播人数 × 人均开播天数 × 人日均推流时长<br>真人直播时长 = 真人直播 GMV ÷ 单小时直播 GMV</p></div>
+        </div>
+        <div class="rv formula">
+          <div class="eq">真人直播时长目标 =（行业 GMV × 圈选名单占比）÷ 单小时直播 GMV</div>
+          <div class="note">耦合 GMV（效率倒推）：行业整体 GMV → 圈选名单直播 GMV 占比 → 真人直播 GMV → ÷ 单小时 GPM → 总推流时长。占比 follow Q3TD、单时 GMV 对齐 Q2-YoY，口径均为有效开播、剔数字人与录播。</div>
+        </div>
+        <div class="rv" style="margin-top:14px;font-size:13.5px;color:var(--dim);">测算出达人 25.3 万小时、精品 73.0 万小时（PlanA），用 <span class="teal-c">QTD / Q2 两版平推交叉验证</span>。</div>
+      </div>
+      <div class="pageno">07 / <b>16</b></div>
+    </section>
+
+    <!-- 08 项目二·复盘合理性 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">目标</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag teal">项目二 · 达成复盘</span></div>
+        <div class="rv"><h2 class="title">目标<span class="teal-c">定得高</span>，但方向和口径都对</h2></div>
+        <div class="rv" style="display:grid;grid-template-columns:1fr 1.2fr;gap:16px;margin-top:18px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="card teal"><div style="font-family:var(--font-num);font-size:34px;font-weight:800;color:var(--teal);">85.99% <span style="font-size:14px;color:var(--faint);font-weight:600;">vs 83.45%</span></div><div style="font-size:14px;color:var(--ink);font-weight:600;margin-top:6px;">达人 vs 精品 QTD 达成</div></div>
+            <div class="card"><h4><span class="dot"></span>精品目标抬升 29pp</h4><p>8.4% → 37.62%，达人仅抬 14pp —— 精品分母更大、更难。</p></div>
+          </div>
+          <div class="card">
+            <div style="font-size:13px;font-weight:700;color:var(--faint);margin-bottom:4px;">QTD 达成率</div>
+            <div class="barchart">
+              <div class="bar-row">
+                <span class="bar-label">达人</span>
+                <div class="bar-track"><div class="bar-fill teal" style="width:86%;"></div></div>
+                <span class="bar-val">85.99%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">精品</span>
+                <div class="bar-track"><div class="bar-fill gold" style="width:83%;"></div></div>
+                <span class="bar-val">83.45%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rv" style="margin-top:14px;font-size:13.5px;color:var(--dim);">达人达成反超精品：精品 7 月底 8 月初下滑、人均开播天数环比 <span class="dim">-3.77%</span>；目标合理 —— 高标准是主动施压，下一步关注效率（精品单时 GMV Q2 同比 -7%）。</div>
+      </div>
+      <div class="pageno">08 / <b>16</b></div>
+    </section>
+
+    <!-- 09 项目三·拆解框架 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">归因</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag gold">项目三 · 经营复盘归因</span></div>
+        <div class="rv"><h2 class="title">大盘 GMV 下降，<span class="gold-c">四步拆到底</span></h2></div>
+        <div class="rv flow">
+          <div class="step"><div class="no">STEP 1</div><h4>确认口径</h4><p>支付 vs 结算、埋点 ETL 延迟</p><span class="arr">›</span></div>
+          <div class="step"><div class="no">STEP 2</div><h4>人货场拆</h4><p>供给 / 流量 / 用户 三线下钻</p><span class="arr">›</span></div>
+          <div class="step"><div class="no">STEP 3</div><h4>归因验证</h4><p>YoY AA + 贡献度规模加权</p><span class="arr">›</span></div>
+          <div class="step"><div class="no">STEP 4</div><h4>输出行动</h4><p>止血 / 修复 / 预警</p></div>
+        </div>
+        <div class="rv grid g3">
+          <div class="card"><h4><span class="dot"></span>供给</h4><p>GMV = 动销商家数 × 店效；看开播主播数、推流时长、挂车短视频、上架商品。</p></div>
+          <div class="card gold"><h4><span class="dot"></span>流量</h4><p>GMV = 曝光 × GPM；拆场域、来源、页面，看哪个入口流量和 GPM 掉。</p></div>
+          <div class="card"><h4><span class="dot"></span>用户</h4><p>GMV = 活跃用户 × ARPU；规模 vs 价值、U 分层流转、行为质量。</p></div>
+        </div>
+      </div>
+      <div class="pageno">09 / <b>16</b></div>
+    </section>
+
+    <!-- 10 项目三·案例结论 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">归因</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag gold">项目三 · 关键结论</span></div>
+        <div class="rv"><h2 class="title">拆穿<span class="gold-c">被总量掩盖</span>的真问题</h2></div>
+        <div class="rv" style="display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-top:16px;">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="card"><h4><span class="dot"></span>用户侧：价值结构在变</h4><p>补贴留住人但没提高价值，真正基本盘高频用户（6 单以上，1/4 MAC 贡献近 8 成 GMV）在持续流失。</p></div>
+            <div class="card gold"><h4><span class="dot"></span>818：大促拉动减弱</h4><p>爆发系数 1.36x 弱于去年 1.4x；提升集中在大场（1.3-2 倍），底场爆发系数 &lt;1。</p></div>
+          </div>
+          <div class="card">
+            <div style="font-size:13px;font-weight:700;color:var(--faint);margin-bottom:6px;">剥离头部+硬通前后降幅</div>
+            <div class="barchart">
+              <div class="bar-row">
+                <span class="bar-label">达人·剥离后</span>
+                <div class="bar-track"><div class="bar-fill orange" style="width:96%;"></div></div>
+                <span class="bar-val" style="color:var(--accent);">-27%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">达人·剥离前</span>
+                <div class="bar-track"><div class="bar-fill gray" style="width:75%;"></div></div>
+                <span class="bar-val">-21%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">精品·剥离后</span>
+                <div class="bar-track"><div class="bar-fill orange" style="width:100%;"></div></div>
+                <span class="bar-val" style="color:var(--accent);">-28%</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">精品·剥离前</span>
+                <div class="bar-track"><div class="bar-fill gray" style="width:71%;"></div></div>
+                <span class="bar-val">-20%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rv" style="margin-top:14px;padding:14px 20px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);">
+          <p style="font-size:13.5px;color:var(--dim);">策略建议：补贴从<span class="gold-c">"拉新冲量"</span>转向<span class="gold-c">"保高频、促中间层跃迁"</span>；直播间已关 GPM 从 -18% 回到 -6%，方向对了。</p>
+        </div>
+      </div>
+      <div class="pageno">10 / <b>16</b></div>
+    </section>
+
+    <!-- 11 项目四·做法产出 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">提效</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag blue">项目四 · AI 自动化</span></div>
+        <div class="rv"><h2 class="title">把高频复盘<span class="blue-c">Skill 化</span>，3-4h → 25min</h2></div>
+        <div class="rv" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div class="card blue"><div style="font-family:var(--font-num);font-size:34px;font-weight:800;color:var(--blue);">6 个</div><div style="font-size:14px;color:var(--ink);font-weight:600;margin-top:6px;">可复用 Skill</div><p style="font-size:12px;color:var(--faint);margin-top:4px;">勤奋度圈选周报、818 日报、WBR 周报 + 目标测算、大促达成率、DAC 分析</p></div>
+            <div class="card"><h4><span class="dot"></span>做法</h4><p>基于 DataAgent Skill 机制，把"取数 → 算贡献度 → 写结论"固化，输入周期即自动跑。</p></div>
+          </div>
+          <div class="card">
+            <div style="font-size:13px;font-weight:700;color:var(--faint);margin-bottom:4px;">单次复盘耗时</div>
+            <div class="barchart">
+              <div class="bar-row">
+                <span class="bar-label">Skill 化后</span>
+                <div class="bar-track"><div class="bar-fill teal" style="width:12%;"></div></div>
+                <span class="bar-val" style="color:var(--teal);">25 分钟</span>
+              </div>
+              <div class="bar-row">
+                <span class="bar-label">人工</span>
+                <div class="bar-track"><div class="bar-fill gray" style="width:100%;"></div></div>
+                <span class="bar-val">3-4 小时</span>
+              </div>
+            </div>
+            <div style="margin-top:14px;font-size:12.5px;color:var(--dim);">一周省约 20 人时。</div>
+          </div>
+        </div>
+        <div class="rv" style="margin-top:14px;font-size:13.5px;color:var(--dim);">口径说准：不是"正确率提升"，是<span class="blue-c">一致性</span> —— 固化口径公式，消除 Excel 拖错行这类低级错误。</div>
+      </div>
+      <div class="pageno">11 / <b>16</b></div>
+    </section>
+
+    <!-- 12 项目四·难点解法 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">提效</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag blue">项目四 · 最难的问题</span></div>
+        <div class="rv"><h2 class="title">Agent 会<span class="blue-c">"撒谎"</span>，怎么办</h2></div>
+        <div class="rv" style="margin-top:18px;padding:18px 24px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);">
+          <p style="font-size:14.5px;color:var(--ink);line-height:1.7;">现象：让它生成文稿，它回"已保存文件、已存记忆"，一查什么都没有，<span class="blue-c">那轮工具调用是 0</span>。这比算错更可怕 —— 告诉你"做完了"实际没做。</p>
+        </div>
+        <div class="rv grid g3">
+          <div class="card"><h4><span class="dot"></span>根因</h4><p>长上下文注意力衰减、模型偷懒直接停，最本质是 Skill 步骤"描述性"而非"强制性"。</p></div>
+          <div class="card blue"><h4><span class="dot"></span>解法一 · Plan 状态机</h4><p>步骤加 blockedBy 依赖，前一步没完成后一步触发不了，"物理上没法跳步"。</p></div>
+          <div class="card blue"><h4><span class="dot"></span>解法二 · 放行检查</h4><p>每步校验产物，写死禁止指令：没调 write_file 不许说"已保存"。</p></div>
+        </div>
+        <div class="rv" style="margin-top:16px;font-size:13.5px;color:var(--dim);">认知：自然语言约束是软的，<span class="blue-c">可靠自动化靠平台级硬约束兜底</span>。跟做数据一个原则 —— 不信"它说做了"，只看"它真的产出了什么"。</div>
+      </div>
+      <div class="pageno">12 / <b>16</b></div>
+    </section>
+
+    <!-- 13 滴滴·看板与AB实验 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">滴滴</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag blue">滴滴 · 战略发展部</span></div>
+        <div class="rv"><h2 class="title">看板监控 + 拼车 AB 实验</h2></div>
+        <div class="rv grid g2">
+          <div class="card"><h4><span class="dot"></span>SQL 与看板搭建</h4><p>每日监控各城市 GMV 占比、毛利率；发现 C 补率日级波动与策略不符，SQL 下钻定位到其他补贴活动交叉影响，避免策略误判。</p></div>
+          <div class="card blue"><h4><span class="dot"></span>拼车 AB 实验</h4><p>拼车功能上线前评估对大盘影响，设计拼车选项 AB 实验，用 CUPED 降方差、BH 校正多重检验，分城市监控 GMV、毛利率。</p></div>
+        </div>
+        <div class="rv" style="margin-top:18px;padding:18px 24px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);">
+          <p style="font-size:14px;color:var(--dim);line-height:1.7;">异动归因案例：某里程段"呼单数高但成交率异常低"，从区域、时段、用户画像下钻，定位到<span class="blue-c">西宁青 A 牌照只能跑市区不能跨区</span> —— 数据异常背后是现实业务约束，不能只看数字。</p>
+        </div>
+      </div>
+      <div class="pageno">13 / <b>16</b></div>
+    </section>
+
+    <!-- 14 滴滴·城市策略 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">滴滴</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag blue">滴滴 · 城市策略优化</span></div>
+        <div class="rv"><h2 class="title">独立负责定价补贴，<span class="blue-c">GMV 占比 +60%</span></h2></div>
+        <div class="rv grid g2">
+          <div class="card"><h4><span class="dot"></span>核心逻辑</h4><p>先判断城市缺 B（司机）还是缺 C（乘客）：缺司机提价、缺乘客补贴、两边都缺提价加补盯毛利；都不缺就按漏斗下拆，看哪个里程段、区域 CR 出问题。</p></div>
+          <div class="card blue"><div class="big blue">+60%</div><h4 style="margin-top:6px;"><span class="dot"></span>成果</h4><p>3 个月内在所有城市毛利率为正的前提下，重点城市 GMV 占比提升 60%、多数城市提升 10-20%，超额达成 Q4 目标。</p></div>
+        </div>
+        <div class="rv" style="margin-top:20px;">
+          <ul class="ulist blue">
+            <li>围绕两个核心指标：<span class="dim">GMV 占比（规模）+ 去 B 补毛利率（可持续）</span></li>
+            <li>跑通 <span class="blue-c">"发现问题 → 验证方案 → 落地见效"</span> 的数据驱动闭环</li>
+          </ul>
+        </div>
+      </div>
+      <div class="pageno">14 / <b>16</b></div>
+    </section>
+
+    <!-- 15 收获与展望 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">展望</span><span class="dot"></span></div>
+      <div class="content">
+        <div class="rv"><span class="tag">Reflection · 收获与展望</span></div>
+        <div class="rv"><h2 class="title">从"把数据拆清楚"到<span class="accent">"自己下判断"</span></h2></div>
+        <div class="rv grid g3">
+          <div class="card"><h4><span class="dot"></span>技术层</h4><p>完整走通因果分析闭环 —— 从实验设计、因果验证到人群刻画、策略输出，补齐 AB 实验与因果推断实战经验。</p></div>
+          <div class="card teal"><h4><span class="dot"></span>业务层</h4><p>通过 WBR/MBR/QBR 和大促复盘，系统掌握电商大盘用户、达人、商家分型、勤奋度、商品力的口径与归因逻辑。</p></div>
+          <div class="card gold"><h4><span class="dot"></span>待突破</h4><p>目前仍偏执行和支持角色，在独立定义问题、给出有观点的业务判断上还有差距。</p></div>
+        </div>
+        <div class="rv" style="margin-top:20px;padding:16px 22px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);">
+          <p style="font-size:13.5px;color:var(--dim);line-height:1.7;">规划：近期独立主导至少一个<span class="accent">端到端深度专题</span>，不止输出结论，更要推动结论落地到业务决策；持续推进分析场景的 AI 化。</p>
+        </div>
+      </div>
+      <div class="pageno">15 / <b>16</b></div>
+    </section>
+
+    <!-- 16 收尾 -->
+    <section class="slide">
+      <div class="topband"></div>
+      <div class="secmark"><span class="word">收尾</span><span class="dot"></span></div>
+      <div class="content" style="display:flex;flex-direction:column;justify-content:center;align-items:flex-start;">
+        <div class="rv"><span class="tag teal">Summary · 收尾</span></div>
+        <div class="rv"><h1 class="title">用数据验证判断，<br>把结论<span class="accent">推向决策</span></h1></div>
+        <div class="rv"><p class="sub">从因果实验到目标测算，从经营归因到 AI 提效 —— 一条能自己扛到底的数据分析链路。</p></div>
+        <div class="rv" style="margin-top:48px;font-size:14px;color:var(--faint);">谢谢 ｜ 张筱琦 ｜ 电商经营策略中心</div>
+      </div>
+      <div class="pageno">16 / <b>16</b></div>
+    </section>
+
+  </div>
+
+  <div class="navbtn">
+    <button id="prev">‹</button>
+    <button id="next">›</button>
+  </div>
+  <div class="hint">← → 方向键翻页</div>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var stage = document.getElementById('stage');
+  var fill = document.querySelector('.progress .fill');
+  var idx = 0, total = slides.length;
+  var sections = ['开篇','简介','全景','灵顺','灵顺','灵顺','目标','目标','归因','归因','提效','提效','滴滴','滴滴','展望','收尾'];
+
+  function renderSecmark(){
+    slides.forEach(function(s, i){
+      var sm = s.querySelector('.secmark');
+      if(sm.__built) return; sm.__built = true;
+      sm.querySelector('.word').textContent = sections[i];
+    });
+  }
+  renderSecmark();
+
+  function go(n){
+    if(n<0) n=0; if(n>=total) n=total-1;
+    if(n===idx) return;
+    slides[idx].classList.remove('active'); slides[idx].classList.add('prev');
+    setTimeout(function(){ slides[idx].classList.remove('prev'); }, 500);
+    idx = n;
+    slides[idx].classList.add('active');
+    fill.style.width = ((idx+1)/total*100)+'%';
+    slides.forEach(function(s, i){
+      var w = s.querySelector('.secmark .word');
+      if(w) w.style.color = (i===idx ? 'var(--accent)' : 'var(--faint)');
+    });
+  }
+
+  function scale(){
+    var sc = Math.min(window.innerWidth/1280, window.innerHeight/720);
+    stage.style.transform = 'scale(' + sc + ')';
+  }
+  window.addEventListener('resize', scale);
+
+  document.getElementById('next').addEventListener('click', function(){ go(idx+1); });
+  document.getElementById('prev').addEventListener('click', function(){ go(idx-1); });
+
+  window.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); go(idx+1); }
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){ e.preventDefault(); go(idx-1); }
+  });
+
+  var tx=0;
+  window.addEventListener('touchstart', function(e){ tx = e.touches[0].clientX; });
+  window.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - tx;
+    if(Math.abs(dx)>50){ dx<0 ? go(idx+1) : go(idx-1); }
+  });
+
+  slides[0].classList.add('active');
+  fill.style.width = (1/total*100)+'%';
+  scale();
+})();
+</script>
+</body>
+</html>
